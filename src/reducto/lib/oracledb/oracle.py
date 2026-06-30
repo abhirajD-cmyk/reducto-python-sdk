@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import array
 from typing import Any
 from decimal import Decimal
@@ -27,6 +28,7 @@ class OracleSchemaManager:
         self._create_table_if_missing(DOCUMENTS_TABLE, _documents_ddl())
         self._create_table_if_missing(EXTRACTIONS_TABLE, _extractions_ddl())
         self._create_table_if_missing(CHUNKS_TABLE, _chunks_ddl(vector_dimensions))
+        self._validate_vector_column_dimensions(CHUNKS_TABLE, "EMBEDDING", vector_dimensions)
         self._create_table_if_missing(TABLES_TABLE, _tables_ddl())
         self._create_table_if_missing(FACTS_TABLE, _facts_ddl())
         self._resize_varchar_column_if_smaller(FACTS_TABLE, "RAW_VALUE", 4000)
@@ -92,6 +94,32 @@ class OracleSchemaManager:
             if str(data_type).upper() != "VARCHAR2" or int(data_length) >= minimum_length:
                 return
             cursor.execute(f"ALTER TABLE {table_name} MODIFY {column_name} VARCHAR2({minimum_length})")
+
+    def _validate_vector_column_dimensions(self, table_name: str, column_name: str, expected: int) -> None:
+        sql = """
+            SELECT data_type, vector_info
+            FROM user_tab_columns
+            WHERE table_name = :table_name
+              AND column_name = :column_name
+        """
+        with self.connection.cursor() as cursor:
+            cursor.execute(sql, table_name=table_name.upper(), column_name=column_name.upper())
+            row = cursor.fetchone()
+
+        if not row or str(row[0]).upper() != "VECTOR":
+            raise RuntimeError(f"{table_name}.{column_name} must be an Oracle VECTOR column.")
+
+        vector_info = str(row[1] or "")
+        match = re.search(r"VECTOR\s*\(\s*(\d+)", vector_info, flags=re.IGNORECASE)
+        if match is None:
+            raise RuntimeError(f"Could not determine the dimensions of {table_name}.{column_name}.")
+
+        actual = int(match.group(1))
+        if actual != expected:
+            raise RuntimeError(
+                f"{table_name}.{column_name} is VECTOR({actual}), but the configured embedding model requires "
+                f"VECTOR({expected}). Recreate the vector column and re-ingest the documents."
+            )
 
 
 class OracleDocumentRepository:

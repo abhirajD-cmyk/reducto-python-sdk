@@ -36,7 +36,8 @@ CREATE TABLE document_chunks (
     page_end NUMBER,
     block_count NUMBER,
     block_metadata JSON,
-    embedding VECTOR(384, FLOAT32),
+    -- Matches the default Oracle DBDev LLM model; change with the model configuration.
+    embedding VECTOR(2048, FLOAT32),
     created_at TIMESTAMP DEFAULT SYSTIMESTAMP,
     CONSTRAINT document_chunks_doc_idx_uk UNIQUE (document_id, chunk_index)
 );

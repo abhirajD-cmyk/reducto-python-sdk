@@ -11,6 +11,7 @@ from examples.oracledb.demo.app import (
     extract_url,
     _safe_filename,
     parse_multipart_form,
+    embedding_status_payload,
     _extract_schema_from_payload,
 )
 from reducto.lib.oracledb.models import (
@@ -36,6 +37,54 @@ def test_load_env_sets_missing_values(tmp_path: Path, monkeypatch: pytest.Monkey
 
     assert os.environ["DEMO_TEST_VALUE"] == "from-file"
     assert os.environ["DEMO_EXISTING_VALUE"] == "from-env"
+
+
+def test_embedding_status_performs_live_dimension_check(monkeypatch: pytest.MonkeyPatch) -> None:
+    class _Provider:
+        dimensions = 3
+
+        def embed_text(self, text: str) -> list[float]:
+            assert text == "Oracle Database vector readiness check"
+            return [0.1, 0.2, 0.3]
+
+    monkeypatch.setattr(
+        "examples.oracledb.demo.app.embedding_provider_from_env",
+        lambda **_kwargs: _Provider(),
+    )
+    monkeypatch.setattr(
+        "examples.oracledb.demo.app.embedding_provider_name",
+        lambda _provider=None: "oracle:test-model",
+    )
+
+    status = embedding_status_payload()
+
+    assert status["connected"] is True
+    assert status["provider"] == "oracle:test-model"
+    assert status["dimensions"] == 3
+    assert status["latency_ms"] >= 0
+
+
+def test_embedding_status_rejects_wrong_dimensions(monkeypatch: pytest.MonkeyPatch) -> None:
+    class _Provider:
+        dimensions = 3
+
+        def embed_text(self, _text: str) -> list[float]:
+            return [0.1, 0.2]
+
+    monkeypatch.setattr(
+        "examples.oracledb.demo.app.embedding_provider_from_env",
+        lambda **_kwargs: _Provider(),
+    )
+    monkeypatch.setattr(
+        "examples.oracledb.demo.app.embedding_provider_name",
+        lambda _provider=None: "oracle:test-model",
+    )
+
+    status = embedding_status_payload()
+
+    assert status["connected"] is False
+    assert status["dimensions"] is None
+    assert "returned 2 dimensions; expected 3" in status["error"]
 
 
 def test_parse_multipart_form_extracts_fields_and_file() -> None:

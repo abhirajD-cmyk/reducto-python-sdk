@@ -2,8 +2,10 @@ from __future__ import annotations
 
 from typing import Any
 
+import pytest
+
 from reducto.lib.oracledb.models import JsonValue, DocumentMetadata, NormalizedExtractResult
-from reducto.lib.oracledb.oracle import OracleDocumentRepository
+from reducto.lib.oracledb.oracle import OracleSchemaManager, OracleDocumentRepository
 from reducto.lib.oracledb.embeddings import CohereEmbeddingProvider
 from reducto.lib.oracledb.normalizer import normalize_parse_response
 
@@ -70,6 +72,44 @@ class _CohereResponse:
 class _CohereClient:
     def post(self, _url: str, **_kwargs: object) -> _CohereResponse:
         return _CohereResponse()
+
+
+class _SchemaCursor:
+    def __init__(self, row: tuple[object, ...] | None) -> None:
+        self.row = row
+
+    def __enter__(self) -> _SchemaCursor:
+        return self
+
+    def __exit__(self, exc_type: object, exc: object, traceback: object) -> None:
+        return None
+
+    def execute(self, _sql: str, **_kwargs: object) -> None:
+        return None
+
+    def fetchone(self) -> tuple[object, ...] | None:
+        return self.row
+
+
+class _SchemaConnection:
+    def __init__(self, row: tuple[object, ...] | None) -> None:
+        self.row = row
+
+    def cursor(self) -> _SchemaCursor:
+        return _SchemaCursor(self.row)
+
+
+def test_schema_manager_accepts_matching_vector_dimensions() -> None:
+    manager = OracleSchemaManager(_SchemaConnection(("VECTOR", "VECTOR(2048,FLOAT32,DENSE)")))
+
+    manager._validate_vector_column_dimensions("DOCUMENT_CHUNKS", "EMBEDDING", 2048)
+
+
+def test_schema_manager_rejects_mismatched_vector_dimensions() -> None:
+    manager = OracleSchemaManager(_SchemaConnection(("VECTOR", "VECTOR(384,FLOAT32,DENSE)")))
+
+    with pytest.raises(RuntimeError, match=r"VECTOR\(384\).+requires VECTOR\(2048\)"):
+        manager._validate_vector_column_dimensions("DOCUMENT_CHUNKS", "EMBEDDING", 2048)
 
 
 def test_store_parse_result_inserts_document_chunks_tables_and_facts() -> None:

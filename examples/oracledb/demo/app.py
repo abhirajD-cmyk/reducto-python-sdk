@@ -24,8 +24,9 @@ from reducto.lib.oracledb.retrieval import OracleHybridRetriever
 from reducto.lib.oracledb.embeddings import embedding_provider_name, embedding_provider_from_env
 from reducto.lib.oracledb.reducto_client import ReductoDocumentParser
 
-EXAMPLE_ROOT = Path(__file__).resolve().parent.parent
-STATIC = Path(__file__).resolve().parent / "static"
+DEMO_ROOT = Path(__file__).resolve().parent
+EXAMPLE_ROOT = DEMO_ROOT.parent
+STATIC = DEMO_ROOT / "static"
 
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
@@ -65,22 +66,24 @@ class MultipartForm:
     files: dict[str, UploadedFile]
 
 
-def load_env(path: Path = EXAMPLE_ROOT / ".env") -> None:
-    if not path.exists():
-        return
-
-    for raw_line in path.read_text(encoding="utf-8").splitlines():
-        line = raw_line.strip()
-        if not line or line.startswith("#") or "=" not in line:
+def load_env(path: Path | None = None) -> None:
+    paths = (path,) if path is not None else (DEMO_ROOT / ".env", EXAMPLE_ROOT / ".env")
+    for env_path in paths:
+        if not env_path.exists():
             continue
-        key, value = line.split("=", 1)
-        key = key.strip()
-        value = value.strip().strip("'\"")
-        if key and key not in os.environ:
-            os.environ[key] = value
+        for raw_line in env_path.read_text(encoding="utf-8").splitlines():
+            line = raw_line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, value = line.split("=", 1)
+            key = key.strip()
+            value = value.strip().strip("'\"")
+            if key and key not in os.environ:
+                os.environ[key] = value
 
 
 def status_payload() -> dict[str, Any]:
+    embedding = embedding_status_payload()
     payload: dict[str, Any] = {
         "environment": {
             "oracle_user": os.getenv("ORACLE_USER", ""),
@@ -88,8 +91,9 @@ def status_payload() -> dict[str, Any]:
             "oracle_vector_dimensions": os.getenv("ORACLE_VECTOR_DIMENSIONS", ""),
             "reducto_api_key": bool(os.getenv("REDUCTO_API_KEY")),
             "sec_user_agent": bool(os.getenv("SEC_USER_AGENT")),
-            "embedding_provider": embedding_provider_name(),
+            "embedding_provider": embedding["provider"],
         },
+        "embedding": embedding,
         "database": {
             "connected": False,
             "tables": {},
@@ -99,7 +103,11 @@ def status_payload() -> dict[str, Any]:
     try:
         connection = connect_oracle()
         try:
-            OracleSchemaManager(connection).create_schema(vector_dimensions=vector_dimensions_from_env())
+            dimensions = int(embedding["dimensions"] or vector_dimensions_from_env())
+            OracleSchemaManager(connection).create_schema(
+                vector_dimensions=dimensions,
+                create_text_index=True,
+            )
             payload["database"] = {
                 "connected": True,
                 "tables": table_counts(connection),
@@ -115,6 +123,38 @@ def status_payload() -> dict[str, Any]:
             "documents": [],
         }
     return payload
+
+
+def embedding_status_payload() -> dict[str, Any]:
+    started = time.perf_counter()
+    provider_name = "embeddings:not-configured"
+    try:
+        provider = embedding_provider_from_env(input_type="search_query")
+        provider_name = embedding_provider_name(provider)
+        vector = provider.embed_text("Oracle Database vector readiness check")
+        actual_dimensions = len(vector)
+        if actual_dimensions != provider.dimensions:
+            raise ValueError(
+                f"Embedding model returned {actual_dimensions} dimensions; expected {provider.dimensions}."
+            )
+        return {
+            "connected": True,
+            "provider": provider_name,
+            "dimensions": actual_dimensions,
+            "latency_ms": _elapsed_ms(started),
+        }
+    except Exception as exc:
+        try:
+            provider_name = embedding_provider_name()
+        except Exception:
+            pass
+        return {
+            "connected": False,
+            "provider": provider_name,
+            "dimensions": None,
+            "latency_ms": _elapsed_ms(started),
+            "error": _public_error(exc),
+        }
 
 
 def table_counts(connection: Any) -> dict[str, int]:
@@ -498,11 +538,15 @@ def _make_server(host: str, port: int) -> tuple[ThreadingHTTPServer, int]:
 def _store_parse_result(metadata: DocumentMetadata, parse_result: Any) -> int:
     connection = connect_oracle()
     try:
-        OracleSchemaManager(connection).create_schema(vector_dimensions=vector_dimensions_from_env())
+        embedding_provider = embedding_provider_from_env(input_type="search_document")
+        OracleSchemaManager(connection).create_schema(
+            vector_dimensions=embedding_provider.dimensions,
+            create_text_index=True,
+        )
         return OracleDocumentRepository(connection).store_parse_result(
             metadata,
             parse_result,
-            embedding_provider_from_env(input_type="search_document"),
+            embedding_provider,
         )
     finally:
         connection.close()
@@ -511,7 +555,10 @@ def _store_parse_result(metadata: DocumentMetadata, parse_result: Any) -> int:
 def _store_extract_result(metadata: DocumentMetadata, extract_result: Any) -> tuple[int, int]:
     connection = connect_oracle()
     try:
-        OracleSchemaManager(connection).create_schema(vector_dimensions=vector_dimensions_from_env())
+        OracleSchemaManager(connection).create_schema(
+            vector_dimensions=vector_dimensions_from_env(),
+            create_text_index=True,
+        )
         return OracleDocumentRepository(connection).store_extract_result(
             metadata,
             extract_result,

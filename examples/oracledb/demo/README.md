@@ -1,15 +1,24 @@
 # Reducto Extract API Demo
 
-Run from the repository root:
+Install the Oracle extra once, then create the demo's private environment file:
 
 ```bash
-set -a
-source examples/oracledb/.env
-set +a
+rye sync --features oracledb
+cp examples/oracledb/demo/.env.example examples/oracledb/demo/.env
+```
+
+Populate the blank secrets in `.env`, then run from the repository root:
+
+```bash
 rye run python examples/oracledb/demo/app.py
 ```
 
-Open the URL printed by the server. The first workflow in the UI is the active
+The app automatically reads `examples/oracledb/demo/.env`. Open the exact URL
+printed by the server; if port 8765 is occupied, it selects the next available
+port. The status strip performs live Oracle and embedding checks rather than
+inferring readiness from credential presence.
+
+The first workflow in the UI is the active
 Extract API integration:
 
 ```text
@@ -36,8 +45,9 @@ Ready-to-run request body:
 Run it from the repository root after starting the demo server:
 
 ```bash
+DEMO_URL=http://127.0.0.1:8765 # replace with the URL printed at startup
 curl -sS \
-  -X POST http://127.0.0.1:8765/api/extract/url \
+  -X POST "$DEMO_URL/api/extract/url" \
   -H "Content-Type: application/json" \
   --data @examples/oracledb/demo/extract_api_request.json
 ```
@@ -80,7 +90,9 @@ The response includes proof that the Extract API path ran:
 The response contract is captured in
 `examples/oracledb/demo/extract_api_response.example.json`.
 
-The demo still includes the parse/RAG ingest and ask panels for chunk retrieval
-and evidence-backed Q&A, but those are companion workflows. The structured-field
-integration demonstrated here is `/api/extract/url` backed by Reducto Extract
-API.
+The demo also includes real Parse API ingestion, Oracle vector storage, semantic
+or hybrid retrieval, and deterministic evidence extraction. The Ask panel does
+not pretend to call a generative answer model: it extracts a concise answer from
+the real retrieved evidence and shows the source text. The structured-field
+integration demonstrated here is `/api/extract/url`, backed by Reducto Extract
+API and persisted to Oracle.

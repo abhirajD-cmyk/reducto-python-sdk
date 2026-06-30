@@ -39,7 +39,7 @@ const flows = {
     ["Question", "Filter scope"],
     ["Vector", "Oracle search"],
     ["Evidence", "Rank snippets"],
-    ["Answer", "Generate response"],
+    ["Answer", "Extract from evidence"],
     ["Source", "Attach citation"],
     ["Done", "Rendered"],
   ],
@@ -103,15 +103,17 @@ async function refreshStatus() {
 
 function renderStatus(status) {
   const env = status.environment || {};
+  const embedding = status.embedding || {};
   const db = status.database || {};
-  const embeddingReady =
-    env.embedding_provider && !String(env.embedding_provider).endsWith(":not-configured");
+  const embeddingReady = Boolean(embedding.connected);
   updatePill("#oracleState", db.connected, db.connected ? `Oracle ${env.oracle_user}` : "Oracle offline");
   updatePill("#reductoState", env.reducto_api_key, env.reducto_api_key ? "Reducto ready" : "Reducto key missing");
   updatePill(
     "#embeddingState",
     embeddingReady,
-    embeddingReady ? `Embeddings ${env.embedding_provider}` : "Embedding provider missing",
+    embeddingReady
+      ? `Embeddings ${embedding.provider} · ${embedding.dimensions}d`
+      : "Embeddings unavailable",
   );
   updatePill("#secState", env.sec_user_agent, env.sec_user_agent ? "SEC user-agent set" : "SEC user-agent missing");
 
@@ -301,7 +303,7 @@ async function submitAsk(event) {
   const button = form.querySelector("button[type='submit']");
   button.disabled = true;
   answerPanel.className = "answer-panel empty";
-  answerPanel.textContent = "Searching Oracle and building answer...";
+  answerPanel.textContent = "Searching Oracle and extracting an evidence-backed answer...";
   document.querySelector("#askState").textContent = "Running";
   startFlow("ask", "Answering question");
   try {
