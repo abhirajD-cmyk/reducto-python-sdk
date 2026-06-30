@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reducto OracleDB Demo</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">RO</div>
+        <div>
+          <h1>Reducto OracleDB Demo</h1>
+          <p>Extract schema-typed JSON with Reducto Extract API and store it in Oracle.</p>
+        </div>
+      </div>
+      <div class="status-strip" aria-live="polite">
+        <span id="oracleState" class="pill">Oracle checking</span>
+        <span id="reductoState" class="pill">Reducto checking</span>
+        <span id="embeddingState" class="pill">Embeddings checking</span>
+        <span id="secState" class="pill">SEC checking</span>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="flow-panel" aria-labelledby="flowTitle">
+        <div class="section-title">
+          <div>
+            <h2 id="flowTitle">Pipeline Visualizer</h2>
+            <p id="flowCaption">Ready</p>
+          </div>
+          <button id="refreshButton" class="secondary-button" type="button">Refresh</button>
+        </div>
+        <div id="pipeline" class="pipeline" aria-live="polite"></div>
+      </section>
+
+      <section class="metrics-grid" aria-label="Integration status">
+        <div class="metric">
+          <span class="metric-label">Documents</span>
+          <strong id="documentsCount">0</strong>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Extractions</span>
+          <strong id="extractionsCount">0</strong>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Chunks</span>
+          <strong id="chunksCount">0</strong>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Tables</span>
+          <strong id="tablesCount">0</strong>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Facts</span>
+          <strong id="factsCount">0</strong>
+        </div>
+      </section>
+
+      <section class="panel full-width" aria-labelledby="extractTitle">
+        <div class="section-title compact">
+          <div>
+            <h2 id="extractTitle">Extract API</h2>
+            <p class="subtle">POST /api/extract/url calls Reducto /extract through client.extract.run and returns schema-typed JSON.</p>
+          </div>
+          <span id="extractState" class="subtle">Ready</span>
+        </div>
+
+        <form id="extractForm" class="extract-form">
+          <div class="form-grid wide">
+            <label>
+              Document URL
+              <input
+                name="url"
+                type="url"
+                value="https://www.sec.gov/Archives/edgar/data/320193/000032019323000106/aapl-20230930.htm"
+                required
+              >
+            </label>
+            <label>
+              System prompt
+              <input name="system_prompt" value="Extract audited annual filing fields. Preserve units in field names where possible.">
+            </label>
+          </div>
+          <div class="form-grid">
+            <label>
+              Company
+              <input name="company" value="AAPL">
+            </label>
+            <label>
+              Year
+              <input name="year" type="number" value="2023">
+            </label>
+            <label>
+              Filing
+              <input name="filing_type" value="10-K">
+            </label>
+          </div>
+          <label>
+            JSON schema sent to Reducto Extract
+            <textarea id="extractSchemaInput" name="schema" rows="12" spellcheck="false">{
+  "type": "object",
+  "properties": {
+    "company_name": { "type": "string" },
+    "fiscal_year": { "type": "integer" },
+    "filing_type": { "type": "string" },
+    "total_net_sales_millions": { "type": "number" },
+    "net_income_millions": { "type": "number" },
+    "cash_and_cash_equivalents_millions": { "type": "number" },
+    "auditor_name": { "type": "string" },
+    "business_summary": { "type": "string" }
+  },
+  "required": ["company_name", "fiscal_year", "filing_type"]
+}</textarea>
+          </label>
+          <div class="action-row">
+            <button class="primary-button" type="submit">Run Extract API</button>
+            <label class="inline-check">
+              <input name="deep_extract" type="checkbox">
+              Deep Extract
+            </label>
+          </div>
+        </form>
+
+        <div id="extractOutput" class="extract-output empty">
+          <p>Run Extract API to see the backend request, Reducto job, Oracle IDs, and returned JSON.</p>
+        </div>
+      </section>
+
+      <div class="workspace">
+        <section class="panel" aria-labelledby="ingestTitle">
+          <div class="section-title compact">
+            <h2 id="ingestTitle">Parse/RAG Ingest</h2>
+            <span id="ingestState" class="subtle">Idle</span>
+          </div>
+
+          <form id="urlForm" class="form-block">
+            <label for="urlInput">Document URL</label>
+            <input
+              id="urlInput"
+              name="url"
+              type="url"
+              value="https://www.sec.gov/Archives/edgar/data/320193/000032019323000106/aapl-20230930.htm"
+              required
+            >
+            <div class="form-grid">
+              <label>
+                Company
+                <input name="company" value="AAPL">
+              </label>
+              <label>
+                Year
+                <input name="year" type="number" value="2023">
+              </label>
+              <label>
+                Filing
+                <input name="filing_type" value="10-K">
+              </label>
+            </div>
+            <label>
+              Title
+              <input name="title" value="Apple 2023 Form 10-K">
+            </label>
+            <button class="primary-button" type="submit">Ingest URL</button>
+          </form>
+
+          <form id="fileForm" class="form-block">
+            <label for="fileInput">Upload Document</label>
+            <input id="fileInput" name="file" type="file" required>
+            <div class="form-grid">
+              <label>
+                Company
+                <input name="company" placeholder="AAPL">
+              </label>
+              <label>
+                Year
+                <input name="year" type="number" placeholder="2023">
+              </label>
+              <label>
+                Filing
+                <input name="filing_type" value="10-K">
+              </label>
+            </div>
+            <label>
+              Title
+              <input name="title" placeholder="Document title">
+            </label>
+            <button class="secondary-button" type="submit">Upload and Ingest</button>
+          </form>
+
+          <div id="ingestMetrics" class="run-metrics empty">
+            <p>Latency will appear after the next ingest.</p>
+          </div>
+        </section>
+
+        <section class="panel" aria-labelledby="askTitle">
+          <div class="section-title compact">
+            <h2 id="askTitle">Ask</h2>
+            <span id="askState" class="subtle">Ready</span>
+          </div>
+          <form id="askForm" class="ask-form">
+            <label for="questionInput">Question</label>
+            <textarea id="questionInput" name="question" rows="4" required>What were Apple's net sales in 2023?</textarea>
+            <div class="form-grid">
+              <label>
+                Company
+                <input name="company" value="AAPL">
+              </label>
+              <label>
+                Year
+                <input name="year" type="number" value="2023">
+              </label>
+              <label>
+                Mode
+                <select name="mode">
+                  <option value="semantic">Semantic</option>
+                  <option value="hybrid">Hybrid</option>
+                </select>
+              </label>
+            </div>
+            <div class="quick-queries" aria-label="Example questions">
+              <button type="button" data-question="What were Apple's net sales in 2023?">Net sales</button>
+              <button type="button" data-question="What affected Apple's total net sales in 2023?">Sales drivers</button>
+              <button type="button" data-question="What risk factors did Apple disclose?">Risk factors</button>
+            </div>
+            <button class="primary-button" type="submit">Ask Document</button>
+          </form>
+
+          <div id="answerPanel" class="answer-panel empty">
+            <p>Ask a question to see the answer, evidence, and source.</p>
+          </div>
+        </section>
+      </div>
+
+      <section class="panel full-width" aria-labelledby="documentsTitle">
+        <div class="section-title compact">
+          <h2 id="documentsTitle">Stored Documents</h2>
+          <span id="documentsState" class="subtle">Loading</span>
+        </div>
+        <div id="documentsList" class="documents-list"></div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

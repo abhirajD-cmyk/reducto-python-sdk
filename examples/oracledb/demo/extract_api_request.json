@@ -1,0 +1,45 @@
+{
+  "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019323000106/aapl-20230930.htm",
+  "company": "AAPL",
+  "year": "2023",
+  "filing_type": "10-K",
+  "title": "Apple 2023 Form 10-K Extract",
+  "system_prompt": "Extract audited annual filing fields. Preserve units in field names where possible.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "company_name": {
+        "type": "string"
+      },
+      "fiscal_year": {
+        "type": "integer"
+      },
+      "filing_type": {
+        "type": "string"
+      },
+      "total_net_sales_millions": {
+        "type": "number"
+      },
+      "net_income_millions": {
+        "type": "number"
+      },
+      "cash_and_cash_equivalents_millions": {
+        "type": "number"
+      },
+      "auditor_name": {
+        "type": "string"
+      },
+      "business_summary": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "company_name",
+      "fiscal_year",
+      "filing_type"
+    ]
+  },
+  "deep_extract": false,
+  "disable_citations": false,
+  "disable_numerical_confidence": false
+}

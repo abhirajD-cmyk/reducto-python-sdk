@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Reducto AI and Oracle Database executive thesis plate</title>
+  <desc id="desc">Enterprise infographic summarizing the strategic thesis, executive outcomes, and combined value of Reducto AI and Oracle Database.</desc>
+  <defs>
+    <pattern id="dotGrid" width="18" height="18" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.1" fill="#f4efe5" opacity="0.22"/>
+    </pattern>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000000" flood-opacity="0.20"/>
+    </filter>
+    <style>
+      .bg { fill:#151412; }
+      .panel { fill:#f3eee4; }
+      .ink { fill:#282521; }
+      .muted { fill:#68625a; }
+      .red { fill:#c74634; }
+      .blue { fill:#4f7289; }
+      .teal { fill:#5c8b84; }
+      .amber { fill:#b98542; }
+      .charcoal { fill:#211f1b; }
+      .hair { stroke:#d7d0c4; stroke-width:1.2; }
+      .hairDark { stroke:#4a433b; stroke-width:1.2; }
+      .ruleRed { stroke:#c74634; stroke-width:4; stroke-linecap:round; }
+      .titleText { font-family:Inter, "Helvetica Neue", Arial, sans-serif; font-weight:800; letter-spacing:0; }
+      .body { font-family:Inter, "Helvetica Neue", Arial, sans-serif; font-weight:500; letter-spacing:0; }
+      .small { font-family:Inter, "Helvetica Neue", Arial, sans-serif; font-weight:600; letter-spacing:0; }
+      .mono { font-family:"SFMono-Regular", Consolas, "Liberation Mono", monospace; font-weight:700; letter-spacing:2px; }
+      .mono2 { font-family:"SFMono-Regular", Consolas, "Liberation Mono", monospace; font-weight:600; letter-spacing:1px; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1920" height="1080"/>
+  <rect width="1920" height="1080" fill="url(#dotGrid)" opacity="0.38"/>
+
+  <g opacity="0.45">
+    <path d="M70 86h44M70 86v44M1806 86h44M1850 86v44M70 994h44M70 950v44M1806 994h44M1850 950v44" fill="none" stroke="#f3eee4" stroke-width="2"/>
+  </g>
+
+  <rect x="96" y="104" width="1728" height="892" rx="34" class="panel" filter="url(#softShadow)"/>
+  <path d="M130 104h1660c18.8 0 34 15.2 34 34v174H96V138c0-18.8 15.2-34 34-34z" class="charcoal"/>
+
+  <text x="142" y="156" class="mono" font-size="18" fill="#f3eee4">ORACLE AI / ENTERPRISE INFOGRAPHIC</text>
+  <line x1="142" y1="180" x2="492" y2="180" class="ruleRed"/>
+  <text x="1630" y="156" text-anchor="end" class="mono2" font-size="16" fill="#bdb4a7">EXECUTIVE THESIS PLATE</text>
+  <text x="142" y="244" class="titleText" font-size="64" fill="#ffffff">Reducto AI + Oracle Database</text>
+  <text x="143" y="286" class="body" font-size="27" fill="#d9d1c5">Enterprise-Grade Document Intelligence Platform</text>
+
+  <g transform="translate(136 344)">
+    <rect width="720" height="286" rx="20" fill="#211f1b"/>
+    <rect x="0" y="0" width="720" height="7" rx="3.5" fill="#c74634"/>
+    <text x="30" y="48" class="mono" font-size="16" fill="#d8d0c3">STRATEGIC THESIS</text>
+    <text x="30" y="96" class="titleText" font-size="30" fill="#ffffff">Organizations do not need another</text>
+    <text x="30" y="133" class="titleText" font-size="30" fill="#ffffff">standalone vector database.</text>
+    <text x="30" y="184" class="body" font-size="23" fill="#efe7dc">They need a governed enterprise platform that</text>
+    <text x="30" y="216" class="body" font-size="23" fill="#efe7dc">transforms unstructured content into trusted,</text>
+    <text x="30" y="248" class="body" font-size="23" fill="#efe7dc">searchable, auditable, and production-ready intelligence.</text>
+  </g>
+
+  <g transform="translate(884 344)">
+    <rect width="424" height="286" rx="18" fill="#fffaf0" stroke="#d7d0c4" stroke-width="1.2"/>
+    <text x="26" y="45" class="mono" font-size="15" fill="#c74634">CONTRIBUTION LAYER</text>
+    <text x="26" y="86" class="titleText" font-size="28" fill="#282521">Reducto AI</text>
+    <line x1="26" y1="106" x2="380" y2="106" class="hair"/>
+    <circle cx="36" cy="139" r="4.5" class="blue"/><text x="55" y="147" class="body" font-size="22" fill="#282521">Advanced document understanding</text>
+    <circle cx="36" cy="176" r="4.5" class="blue"/><text x="55" y="184" class="body" font-size="22" fill="#282521">Extraction, chunking, enrichment</text>
+    <circle cx="36" cy="213" r="4.5" class="blue"/><text x="55" y="221" class="body" font-size="22" fill="#282521">Retrieval optimization</text>
+    <circle cx="36" cy="250" r="4.5" class="blue"/><text x="55" y="258" class="body" font-size="22" fill="#282521">Enterprise taxonomy alignment</text>
+  </g>
+
+  <g transform="translate(1348 344)">
+    <rect width="426" height="286" rx="18" fill="#fffaf0" stroke="#d7d0c4" stroke-width="1.2"/>
+    <text x="26" y="45" class="mono" font-size="15" fill="#c74634">ENTERPRISE FOUNDATION</text>
+    <text x="26" y="86" class="titleText" font-size="28" fill="#282521">Oracle Database</text>
+    <line x1="26" y1="106" x2="382" y2="106" class="hair"/>
+    <circle cx="36" cy="139" r="4.5" class="red"/><text x="55" y="147" class="body" font-size="22" fill="#282521">Storage and native vector search</text>
+    <circle cx="36" cy="176" r="4.5" class="red"/><text x="55" y="184" class="body" font-size="22" fill="#282521">Governance, security, analytics</text>
+    <circle cx="36" cy="213" r="4.5" class="red"/><text x="55" y="221" class="body" font-size="22" fill="#282521">Transactions and operational scale</text>
+    <circle cx="36" cy="250" r="4.5" class="red"/><text x="55" y="258" class="body" font-size="22" fill="#282521">Production-ready enterprise AI</text>
+  </g>
+
+  <g transform="translate(136 662)">
+    <rect width="389" height="194" rx="16" fill="#fffaf0" stroke="#d7d0c4" stroke-width="1.2"/>
+    <text x="24" y="38" class="mono" font-size="14" fill="#8a8278">OUTCOME 01</text>
+    <text x="24" y="76" class="titleText" font-size="24" fill="#282521">Faster AI Application</text>
+    <text x="24" y="106" class="titleText" font-size="24" fill="#282521">Delivery</text>
+    <text x="24" y="143" class="body" font-size="19" fill="#68625a">Accelerate RAG implementation</text>
+    <text x="24" y="171" class="body" font-size="19" fill="#68625a">Eliminate custom parsing pipelines</text>
+  </g>
+
+  <g transform="translate(550 662)">
+    <rect width="389" height="194" rx="16" fill="#fffaf0" stroke="#c74634" stroke-width="1.8"/>
+    <text x="24" y="38" class="mono" font-size="14" fill="#c74634">OUTCOME 02</text>
+    <text x="24" y="76" class="titleText" font-size="24" fill="#282521">Enterprise Governance</text>
+    <text x="24" y="114" class="body" font-size="19" fill="#68625a">Centralized security controls</text>
+    <text x="24" y="142" class="body" font-size="19" fill="#68625a">Fine-grained access management</text>
+    <text x="24" y="170" class="body" font-size="19" fill="#68625a">Auditability and compliance</text>
+  </g>
+
+  <g transform="translate(964 662)">
+    <rect width="389" height="194" rx="16" fill="#fffaf0" stroke="#d7d0c4" stroke-width="1.2"/>
+    <text x="24" y="38" class="mono" font-size="14" fill="#8a8278">OUTCOME 03</text>
+    <text x="24" y="76" class="titleText" font-size="24" fill="#282521">Operational Efficiency</text>
+    <text x="24" y="114" class="body" font-size="19" fill="#68625a">Single platform operations</text>
+    <text x="24" y="142" class="body" font-size="19" fill="#68625a">Reduced infrastructure sprawl</text>
+    <text x="24" y="170" class="body" font-size="19" fill="#68625a">Simplified lifecycle management</text>
+  </g>
+
+  <g transform="translate(1378 662)">
+    <rect width="396" height="194" rx="16" fill="#fffaf0" stroke="#d7d0c4" stroke-width="1.2"/>
+    <text x="24" y="38" class="mono" font-size="14" fill="#8a8278">OUTCOME 04</text>
+    <text x="24" y="76" class="titleText" font-size="24" fill="#282521">Trusted AI</text>
+    <text x="24" y="114" class="body" font-size="19" fill="#68625a">Accurate document extraction</text>
+    <text x="24" y="142" class="body" font-size="19" fill="#68625a">Metadata-rich retrieval</text>
+    <text x="24" y="170" class="body" font-size="19" fill="#68625a">Source traceability</text>
+  </g>
+
+  <g transform="translate(136 890)">
+    <rect width="1638" height="74" rx="18" fill="#211f1b"/>
+    <text x="36" y="29" class="mono" font-size="14" fill="#d8d0c3">KEY MESSAGE</text>
+    <text x="36" y="57" class="titleText" font-size="28" fill="#ffffff">Document Intelligence + Enterprise Governance + Native Vector Search = Production-Grade Enterprise AI</text>
+    <rect x="1510" y="0" width="128" height="74" rx="18" fill="#c74634" opacity="0.92"/>
+    <text x="1574" y="46" text-anchor="middle" class="mono" font-size="18" fill="#ffffff">AI/DB</text>
+  </g>
+</svg>

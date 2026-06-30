@@ -13,6 +13,8 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 The REST API documentation can be found on [docs.reductoai.com](https://docs.reductoai.com). The full API of this library can be found in [api.md](api.md).
 
+For a complete Reducto and Oracle Database workflow, see the [Oracle Database integration example](examples/oracledb/README.md).
+
 ## Installation
 
 ```sh

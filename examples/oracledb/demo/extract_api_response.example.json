@@ -1,0 +1,108 @@
+{
+  "route": "/api/extract/url",
+  "backend_api": "Reducto Extract API",
+  "reducto_endpoint": "/extract",
+  "sdk_call": "client.extract.run",
+  "document_id": 83,
+  "extraction_id": 3,
+  "reducto_job_id": "854cc2a0-1721-493c-b493-2c336ca99217",
+  "studio_link": "https://studio.reducto.ai/job/854cc2a0-1721-493c-b493-2c336ca99217",
+  "citations_enabled": true,
+  "schema_fields": 8,
+  "request_body": {
+    "input": "https://www.sec.gov/Archives/edgar/data/320193/000032019323000106/aapl-20230930.htm",
+    "instructions": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "company_name": {
+            "type": "string"
+          },
+          "fiscal_year": {
+            "type": "integer"
+          },
+          "filing_type": {
+            "type": "string"
+          },
+          "total_net_sales_millions": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "company_name",
+          "fiscal_year",
+          "filing_type"
+        ]
+      },
+      "system_prompt": "Extract audited annual filing fields. Preserve units in field names where possible."
+    },
+    "parsing": {
+      "enhance": {
+        "intelligent_ordering": true,
+        "summarize_figures": false
+      },
+      "formatting": {
+        "add_page_markers": true,
+        "merge_tables": true,
+        "table_output_format": "csv"
+      },
+      "settings": {
+        "return_ocr_data": false
+      }
+    },
+    "settings": {
+      "citations": {
+        "enabled": true,
+        "numerical_confidence": true
+      },
+      "deep_extract": false
+    }
+  },
+  "extracted_json": {
+    "company_name": {
+      "value": "Apple Inc.",
+      "citations": [
+        {
+          "type": "Text",
+          "bbox": {
+            "page": 5,
+            "left": 0.1045734127,
+            "top": 0.8130207854,
+            "width": 0.7908531746,
+            "height": 0.0194134611
+          },
+          "content": "Apple Inc.",
+          "confidence": "high"
+        }
+      ]
+    },
+    "fiscal_year": {
+      "value": 2023,
+      "citations": [
+        {
+          "type": "Text",
+          "bbox": {
+            "page": 5
+          },
+          "content": "For the fiscal year ended September 30, 2023",
+          "confidence": "high"
+        }
+      ]
+    },
+    "filing_type": {
+      "value": "FORM 10-K",
+      "citations": []
+    },
+    "total_net_sales_millions": {
+      "value": 383285,
+      "citations": []
+    }
+  },
+  "elapsed_seconds": 96.42,
+  "latency": {
+    "total_ms": 96420,
+    "extract_ms": 95800,
+    "store_ms": 620,
+    "reducto_ms": null
+  }
+}

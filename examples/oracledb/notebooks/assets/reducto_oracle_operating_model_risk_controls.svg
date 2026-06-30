@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Production operating model and risk reduction matrix</title>
+  <desc id="desc">Enterprise infographic showing production operating model, risk mitigations, capability map, and executive summary for Reducto AI and Oracle Database.</desc>
+  <defs>
+    <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#282521" opacity="0.14"/>
+    </pattern>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000000" flood-opacity="0.16"/>
+    </filter>
+    <style>
+      .page { fill:#efe9dd; }
+      .panel { fill:#fffaf0; stroke:#d7d0c4; stroke-width:1.2; }
+      .dark { fill:#24211d; }
+      .ink { fill:#282521; }
+      .muted { fill:#68625a; }
+      .red { fill:#c74634; }
+      .blue { fill:#4f7289; }
+      .teal { fill:#5c8b84; }
+      .amber { fill:#b98542; }
+      .hair { stroke:#d7d0c4; stroke-width:1.2; }
+      .redLine { stroke:#c74634; stroke-width:4; stroke-linecap:round; }
+      .dash { stroke:#bfb5a7; stroke-width:1.5; stroke-dasharray:7 8; fill:none; }
+      .titleText { font-family:Inter, "Helvetica Neue", Arial, sans-serif; font-weight:800; letter-spacing:0; }
+      .body { font-family:Inter, "Helvetica Neue", Arial, sans-serif; font-weight:500; letter-spacing:0; }
+      .small { font-family:Inter, "Helvetica Neue", Arial, sans-serif; font-weight:700; letter-spacing:0; }
+      .mono { font-family:"SFMono-Regular", Consolas, "Liberation Mono", monospace; font-weight:700; letter-spacing:2px; }
+      .mono2 { font-family:"SFMono-Regular", Consolas, "Liberation Mono", monospace; font-weight:600; letter-spacing:1px; }
+    </style>
+  </defs>
+
+  <rect class="page" width="1920" height="1080"/>
+  <rect width="1920" height="1080" fill="url(#dots)" opacity="0.75"/>
+
+  <text x="90" y="70" class="mono" font-size="17" fill="#c74634">ORACLE AI / OPERATING MODEL</text>
+  <line x1="90" y1="94" x2="444" y2="94" class="redLine"/>
+  <text x="1830" y="70" text-anchor="end" class="mono2" font-size="15" fill="#746b60">GOVERNANCE / RISK / VALUE</text>
+  <text x="90" y="154" class="titleText" font-size="52" fill="#282521">Production Operating Model + Risk Reduction Matrix</text>
+  <text x="92" y="194" class="body" font-size="24" fill="#68625a">Document intelligence becomes operational when ingestion, governance, retrieval, generation, and feedback are owned as one platform.</text>
+
+  <g transform="translate(90 232)">
+    <rect width="820" height="482" rx="24" class="panel" filter="url(#shadow)"/>
+    <text x="30" y="46" class="mono" font-size="16" fill="#4f7289">PRODUCTION OPERATING MODEL</text>
+    <line x1="30" y1="68" x2="355" y2="68" class="hair"/>
+
+    <rect x="276" y="165" width="268" height="138" rx="20" class="dark"/>
+    <text x="410" y="210" text-anchor="middle" class="mono2" font-size="15" fill="#f2b7ad">CONTROL CENTER</text>
+    <text x="410" y="246" text-anchor="middle" class="titleText" font-size="25" fill="#ffffff">Trusted Enterprise</text>
+    <text x="410" y="277" text-anchor="middle" class="titleText" font-size="25" fill="#ffffff">Context</text>
+
+    <path d="M410 150v-44M410 318v44M260 234h-54M560 234h54M305 153l-34-34M515 153l34-34M305 315l-34 34M515 315l34 34" class="dash"/>
+
+    <g transform="translate(58 102)">
+      <rect width="214" height="104" rx="16" fill="#eef3f4" stroke="#c9d8dc"/>
+      <text x="18" y="34" class="titleText" font-size="23" fill="#282521">Ingest</text>
+      <text x="18" y="62" class="body" font-size="16" fill="#68625a">Reducto AI transforms</text>
+      <text x="18" y="86" class="body" font-size="16" fill="#68625a">enterprise documents.</text>
+    </g>
+    <g transform="translate(304 86)">
+      <rect width="214" height="104" rx="16" fill="#f7f2e9" stroke="#d7d0c4"/>
+      <text x="18" y="34" class="titleText" font-size="23" fill="#282521">Store</text>
+      <text x="18" y="58" class="body" font-size="15" fill="#68625a">Oracle Database manages</text>
+      <text x="18" y="78" class="body" font-size="15" fill="#68625a">vectors, metadata,</text>
+      <text x="18" y="98" class="body" font-size="15" fill="#68625a">documents.</text>
+    </g>
+    <g transform="translate(548 102)">
+      <rect width="214" height="104" rx="16" fill="#f4e4de" stroke="#dfb5aa"/>
+      <text x="18" y="34" class="titleText" font-size="23" fill="#282521">Govern</text>
+      <text x="18" y="62" class="body" font-size="16" fill="#68625a">Security, compliance,</text>
+      <text x="18" y="86" class="body" font-size="16" fill="#68625a">ownership, auditability.</text>
+    </g>
+    <g transform="translate(58 294)">
+      <rect width="214" height="104" rx="16" fill="#f7f2e9" stroke="#d7d0c4"/>
+      <text x="18" y="34" class="titleText" font-size="23" fill="#282521">Retrieve</text>
+      <text x="18" y="58" class="body" font-size="15" fill="#68625a">Vector similarity,</text>
+      <text x="18" y="78" class="body" font-size="15" fill="#68625a">metadata filtering,</text>
+      <text x="18" y="98" class="body" font-size="15" fill="#68625a">structured SQL.</text>
+    </g>
+    <g transform="translate(304 310)">
+      <rect width="214" height="104" rx="16" fill="#eef3f4" stroke="#c9d8dc"/>
+      <text x="18" y="34" class="titleText" font-size="23" fill="#282521">Generate</text>
+      <text x="18" y="58" class="body" font-size="15" fill="#68625a">LLMs consume trusted</text>
+      <text x="18" y="78" class="body" font-size="15" fill="#68625a">source-grounded</text>
+      <text x="18" y="98" class="body" font-size="15" fill="#68625a">context.</text>
+    </g>
+    <g transform="translate(548 294)">
+      <rect width="214" height="104" rx="16" fill="#eff2ec" stroke="#ccd6c6"/>
+      <text x="18" y="34" class="titleText" font-size="23" fill="#282521">Improve</text>
+      <text x="18" y="58" class="body" font-size="15" fill="#68625a">Usage analytics and</text>
+      <text x="18" y="78" class="body" font-size="15" fill="#68625a">retrieval feedback</text>
+      <text x="18" y="98" class="body" font-size="15" fill="#68625a">improve quality.</text>
+    </g>
+  </g>
+
+  <g transform="translate(950 232)">
+    <rect width="880" height="482" rx="24" class="panel" filter="url(#shadow)"/>
+    <text x="30" y="46" class="mono" font-size="16" fill="#c74634">RISK REDUCTION MATRIX</text>
+    <line x1="30" y1="68" x2="350" y2="68" class="hair"/>
+    <rect x="30" y="92" width="820" height="48" rx="12" fill="#24211d"/>
+    <text x="56" y="123" class="mono2" font-size="15" fill="#f4efe5">RISK</text>
+    <text x="352" y="123" class="mono2" font-size="15" fill="#f4efe5">MITIGATION</text>
+
+    <g transform="translate(30 158)">
+      <rect width="820" height="46" rx="10" fill="#fffaf0" stroke="#d7d0c4"/>
+      <text x="26" y="30" class="small" font-size="20" fill="#7f2f24">Data Silos</text>
+      <text x="322" y="30" class="body" font-size="20" fill="#282521">Unified Oracle data platform</text>
+    </g>
+    <g transform="translate(30 216)">
+      <rect width="820" height="46" rx="10" fill="#f7f2e9" stroke="#d7d0c4"/>
+      <text x="26" y="30" class="small" font-size="20" fill="#7f2f24">Uncontrolled AI Access</text>
+      <text x="322" y="30" class="body" font-size="20" fill="#282521">RBAC and enterprise security controls</text>
+    </g>
+    <g transform="translate(30 274)">
+      <rect width="820" height="46" rx="10" fill="#fffaf0" stroke="#d7d0c4"/>
+      <text x="26" y="30" class="small" font-size="20" fill="#7f2f24">Poor Retrieval Quality</text>
+      <text x="322" y="30" class="body" font-size="20" fill="#282521">Reducto semantic enrichment and intelligent chunking</text>
+    </g>
+    <g transform="translate(30 332)">
+      <rect width="820" height="46" rx="10" fill="#f7f2e9" stroke="#d7d0c4"/>
+      <text x="26" y="30" class="small" font-size="20" fill="#7f2f24">Operational Complexity</text>
+      <text x="322" y="30" class="body" font-size="20" fill="#282521">Single governed production platform</text>
+    </g>
+    <g transform="translate(30 390)">
+      <rect width="820" height="46" rx="10" fill="#fffaf0" stroke="#d7d0c4"/>
+      <text x="26" y="30" class="small" font-size="20" fill="#7f2f24">Compliance Exposure</text>
+      <text x="322" y="30" class="body" font-size="20" fill="#282521">Centralized governance and auditing</text>
+    </g>
+  </g>
+
+  <g transform="translate(90 752)">
+    <rect width="1740" height="178" rx="24" fill="#24211d" filter="url(#shadow)"/>
+    <text x="30" y="42" class="mono" font-size="16" fill="#d8d0c4">ENTERPRISE CAPABILITY MAP</text>
+    <line x1="30" y1="65" x2="388" y2="65" stroke="#c74634" stroke-width="3" stroke-linecap="round"/>
+    <g transform="translate(30 90)">
+      <text x="0" y="0" class="titleText" font-size="24" fill="#ffffff">Business Users</text>
+      <text x="0" y="31" class="body" font-size="17" fill="#d8d0c4">Knowledge discovery / Research acceleration</text>
+      <text x="0" y="56" class="body" font-size="17" fill="#d8d0c4">Faster decision making</text>
+    </g>
+    <g transform="translate(474 90)">
+      <text x="0" y="0" class="titleText" font-size="24" fill="#ffffff">Developers</text>
+      <text x="0" y="31" class="body" font-size="17" fill="#d8d0c4">Simplified architecture / Faster AI deployment</text>
+      <text x="0" y="56" class="body" font-size="17" fill="#d8d0c4">Reduced integration effort</text>
+    </g>
+    <g transform="translate(930 90)">
+      <text x="0" y="0" class="titleText" font-size="24" fill="#ffffff">Data Teams</text>
+      <text x="0" y="31" class="body" font-size="17" fill="#d8d0c4">Unified governance / Data quality controls</text>
+      <text x="0" y="56" class="body" font-size="17" fill="#d8d0c4">Centralized operations</text>
+    </g>
+    <g transform="translate(1354 90)">
+      <text x="0" y="0" class="titleText" font-size="24" fill="#ffffff">Security Teams</text>
+      <text x="0" y="31" class="body" font-size="17" fill="#d8d0c4">Policy enforcement / Audit visibility</text>
+      <text x="0" y="56" class="body" font-size="17" fill="#d8d0c4">Risk reduction</text>
+    </g>
+  </g>
+
+  <g transform="translate(90 956)">
+    <rect width="1740" height="88" rx="18" fill="#fffaf0" stroke="#c74634" stroke-width="2"/>
+    <text x="28" y="29" class="mono" font-size="14" fill="#c74634">EXECUTIVE SUMMARY</text>
+    <text x="28" y="53" class="titleText" font-size="21" fill="#282521">Reducto AI delivers document intelligence. Oracle Database delivers enterprise-scale governance, vector search,</text>
+    <text x="28" y="76" class="titleText" font-size="21" fill="#282521">transactional consistency, security, and operational reliability.</text>
+  </g>
+</svg>

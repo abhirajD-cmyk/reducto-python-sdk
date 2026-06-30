@@ -40,8 +40,12 @@ classifiers = [
 Homepage = "https://github.com/reductoai/reducto-python-sdk"
 Repository = "https://github.com/reductoai/reducto-python-sdk"
 
+[project.scripts]
+reducto-oracledb = "reducto.lib.oracledb.cli:main"
+
 [project.optional-dependencies]
 aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.9"]
+oracledb = ["oracledb>=2.4,<4"]
 
 [tool.rye]
 managed = true
@@ -112,9 +116,10 @@ include = [
   "/mypy.ini",
   "/noxfile.py",
   "bin/*",
-  "examples/*",
+  "examples/**/*",
+  "examples/oracledb/.env.example",
   "src/*",
-  "tests/*",
+  "tests/**/*",
 ]
 
 [tool.hatch.metadata.hooks.fancy-pypi-readme]
@@ -136,6 +141,9 @@ asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "session"
 filterwarnings = [
   "error"
+]
+markers = [
+  "integration: live tests that require Oracle, Reducto, and embedding credentials",
 ]
 
 [tool.pyright]
@@ -269,3 +277,5 @@ known-first-party = ["reducto", "tests"]
 "scripts/**.py" = ["T201", "T203"]
 "tests/**.py" = ["T201", "T203"]
 "examples/**.py" = ["T201", "T203"]
+"examples/oracledb/notebooks/*.ipynb" = ["B008", "T201", "T203"]
+"src/reducto/lib/oracledb/cli.py" = ["T201", "T203"]
